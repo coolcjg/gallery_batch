@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GalleryRepository : JpaRepository<Gallery, Long> {
+    fun findByStatus(status : String) : List<Gallery>
 }

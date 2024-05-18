@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class GalleryService(
-    val galleryRepository : GalleryRepository
+    val galleryRepository : GalleryRepository,
 ){
+
+
     fun list(): List<GalleryDto>{
-        val galleryList =  galleryRepository.findAll()
+        val galleryList =  galleryRepository.findByStatus("N")
         val galleryDtoList = mutableListOf<GalleryDto>()
 
         for(gallery in galleryList){
@@ -26,5 +28,7 @@ class GalleryService(
         }
         return galleryDtoList
     }
+
+
 
 }
