@@ -6,10 +6,6 @@ import org.springframework.batch.item.ItemWriter
 
 class GalleryWriter : ItemWriter<String> {
 
-    fun write(items : MutableList<out String>) {
-        print(items)
-    }
-
     override fun write(chunk: Chunk<out String>) {
         chunk.forEach{
             println(it)
