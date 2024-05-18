@@ -1,13 +1,13 @@
 package com.cjg.batch.batch
 
+import com.cjg.batch.dto.GalleryDto
 import org.springframework.batch.item.ItemProcessor
 
 
-class GalleryProcessor : ItemProcessor<Int, String> {
+class GalleryProcessor : ItemProcessor<GalleryDto, String> {
 
-    override fun process(item: Int): String? {
-        println(113333)
-        return item.toString()
+    override fun process(item: GalleryDto): String? {
+        return item.galleryId.toString()
     }
 
 }

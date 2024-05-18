@@ -12,7 +12,7 @@ class GalleryWriter : ItemWriter<String> {
 
     override fun write(chunk: Chunk<out String>) {
         chunk.forEach{
-            //println(it)
+            println(it)
         }
     }
 }

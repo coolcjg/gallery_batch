@@ -10,7 +10,7 @@ class GalleryService(
 ){
 
 
-    fun list(): List<GalleryDto>{
+    fun list(): MutableList<GalleryDto>{
         val galleryList =  galleryRepository.findByStatus("N")
         val galleryDtoList = mutableListOf<GalleryDto>()
 
