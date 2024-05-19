@@ -54,7 +54,7 @@ class JobConfiguration(
     @StepScope
     fun galleryPagingItemReader() : JpaPagingItemReader<Gallery>{
         val jpaPagingItemReader = JpaPagingItemReaderBuilder<Gallery>()
-                                    .queryString("SELECT g FROM gallery g WHERE g.status = 'N'")
+                                    .queryString("SELECT g FROM gallery g WHERE g.status = 'N' ORDER BY g.galleryId")
             .pageSize(JOB_SIZE)
             .entityManagerFactory(entityManagerFactory)
             .name("pagingReader")
