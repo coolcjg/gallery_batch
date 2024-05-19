@@ -11,7 +11,6 @@ class Schedule(
     val jobLauncher: JobLauncher,
     val job : Job
 ){
-
     @Scheduled(cron = "0/10 * * * * *")
     fun scheduleTaskUsingCronExpression(){
 

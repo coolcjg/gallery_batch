@@ -1,7 +1,7 @@
 package com.cjg.batch.batch
 
-import com.cjg.batch.dto.GalleryDto
-import com.cjg.batch.service.GalleryService
+import com.cjg.batch.entity.Gallery
+import jakarta.persistence.EntityManagerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobScope
@@ -10,14 +10,17 @@ import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
-import org.springframework.batch.item.support.ListItemReader
+import org.springframework.batch.item.database.JpaPagingItemReader
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
 
 @Configuration
 class JobConfiguration(
-    val galleryService: GalleryService
+    val  entityManagerFactory : EntityManagerFactory,
+    val  galleryProcessor: GalleryProcessor,
+    val  galleryWriter: GalleryWriter
     ) {
 
     @Bean
@@ -35,17 +38,25 @@ class JobConfiguration(
              ): Step {
 
                 return StepBuilder("Step", jobRepository)
-                    .chunk<GalleryDto, String>(2, platformTransactionManager)
-                    .reader(reader())
-                    .processor(GalleryProcessor())
-                    .writer(GalleryWriter())
+                    .chunk<Gallery, com.cjg.batch.document.GalleryDoc>(1, platformTransactionManager)
+                    .reader(galleryPagingItemReader())
+                    .processor(galleryProcessor)
+                    .writer(galleryWriter)
                     .allowStartIfComplete(true)
                     .build()
     }
 
     @Bean
     @StepScope
-    fun reader() : ListItemReader<GalleryDto> {
-        return ListItemReader<GalleryDto>(galleryService.list())
+    fun galleryPagingItemReader() : JpaPagingItemReader<Gallery>{
+        val jpaPagingItemReader = JpaPagingItemReaderBuilder<Gallery>()
+                                    .queryString("SELECT g FROM gallery g WHERE g.status = 'N'")
+            .pageSize(1)
+            .entityManagerFactory(entityManagerFactory)
+            .name("pagingReader")
+            .build()
+
+        return jpaPagingItemReader
+
     }
 }

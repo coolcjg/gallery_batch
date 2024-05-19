@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 
-@Entity
+@Entity(name = "gallery")
 class Gallery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val galleryId: Long? = null
@@ -25,7 +25,7 @@ class Gallery {
 
     @Column(nullable = false, length = 1)
     @ColumnDefault("'N'")
-    val status: String? = null
+    var status: String? = null
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     @Column(nullable = true)

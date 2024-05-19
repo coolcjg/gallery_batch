@@ -1,13 +1,16 @@
 package com.cjg.batch.batch
 
-import com.cjg.batch.dto.GalleryDto
+import com.cjg.batch.entity.Gallery
+import com.cjg.batch.service.GalleryService
 import org.springframework.batch.item.ItemProcessor
+import org.springframework.stereotype.Component
 
+@Component
+class GalleryProcessor(
+    private val galleryService : GalleryService
+) : ItemProcessor<Gallery, com.cjg.batch.document.GalleryDoc> {
 
-class GalleryProcessor : ItemProcessor<GalleryDto, String> {
-
-    override fun process(item: GalleryDto): String? {
-        return item.galleryId.toString()
+    override fun process(item: Gallery): com.cjg.batch.document.GalleryDoc? {
+        return galleryService.convertEntityToDocument(item)
     }
-
 }
