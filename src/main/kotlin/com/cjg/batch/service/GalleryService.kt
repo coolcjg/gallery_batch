@@ -8,6 +8,7 @@ import com.cjg.batch.repository.GalleryRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -63,6 +64,7 @@ class GalleryService(
         if(galleryId != null){
             val gallery:Gallery  = galleryRepository.findByGalleryId(galleryId)
             gallery.status = "Y"
+            gallery.completeDate = LocalDateTime.now()
         }
     }
 

@@ -20,8 +20,12 @@ import org.springframework.transaction.PlatformTransactionManager
 class JobConfiguration(
     val  entityManagerFactory : EntityManagerFactory,
     val  galleryProcessor: GalleryProcessor,
-    val  galleryWriter: GalleryWriter
+    val  galleryWriter: GalleryWriter,
+
     ) {
+    companion object{
+        const val JOB_SIZE : Int = 50
+    }
 
     @Bean
     fun job(jobRepository: JobRepository, transactionManager:PlatformTransactionManager) : Job {
@@ -38,7 +42,7 @@ class JobConfiguration(
              ): Step {
 
                 return StepBuilder("Step", jobRepository)
-                    .chunk<Gallery, com.cjg.batch.document.GalleryDoc>(1, platformTransactionManager)
+                    .chunk<Gallery, com.cjg.batch.document.GalleryDoc>(JOB_SIZE, platformTransactionManager)
                     .reader(galleryPagingItemReader())
                     .processor(galleryProcessor)
                     .writer(galleryWriter)
@@ -51,7 +55,7 @@ class JobConfiguration(
     fun galleryPagingItemReader() : JpaPagingItemReader<Gallery>{
         val jpaPagingItemReader = JpaPagingItemReaderBuilder<Gallery>()
                                     .queryString("SELECT g FROM gallery g WHERE g.status = 'N'")
-            .pageSize(1)
+            .pageSize(JOB_SIZE)
             .entityManagerFactory(entityManagerFactory)
             .name("pagingReader")
             .build()

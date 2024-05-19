@@ -29,7 +29,7 @@ class Gallery {
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     @Column(nullable = true)
-    val completeDate: LocalDateTime? = null
+    var completeDate: LocalDateTime? = null
 
     @Column(nullable = false, length = 40)
     val thumbnailFilePath: String? = null
