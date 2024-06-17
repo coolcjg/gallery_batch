@@ -14,11 +14,8 @@ import java.time.LocalDateTime
 @Transactional
 class GalleryService(
     private val galleryMongoRepository: GalleryMongoRepository
+    , private val galleryRepository : GalleryRepository
 ){
-
-    @Autowired
-    lateinit var galleryRepository : GalleryRepository
-
 
     fun list(): MutableList<GalleryDto>{
         val galleryList =  galleryRepository.findByStatus("N")

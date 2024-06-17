@@ -15,6 +15,12 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -30,6 +36,23 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.batch:spring-batch-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+    val kotestVersion = "4.6.0"
+    //mockk
+    testImplementation("io.mockk:mockk:1.9.3")
+    //kotest
+    testImplementation ("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation ("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation ("io.kotest:kotest-property:$kotestVersion")
+    //kotest-extension-spring
+    testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
+
+
+
+
 }
 
 tasks.withType<KotlinCompile> {

@@ -10,18 +10,18 @@ import java.time.LocalDateTime
 @Entity(name = "gallery")
 class Gallery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val galleryId: Long? = null
+    var galleryId: Long? = null
 
     @Column(nullable = false)
-    val mediaId: Long? = null
+    var mediaId: Long? = null
 
     @Column(nullable = false, length = 5)
-    val type: String? = null
+    var type: String? = null
 
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     @Column(nullable = false)
-    val regDate: LocalDateTime? = null
+    var regDate: LocalDateTime? = null
 
     @Column(nullable = false, length = 1)
     @ColumnDefault("'N'")
@@ -32,14 +32,14 @@ class Gallery {
     var completeDate: LocalDateTime? = null
 
     @Column(nullable = false, length = 40)
-    val thumbnailFilePath: String? = null
+    var thumbnailFilePath: String? = null
 
     @Column(nullable = false, length = 20)
-    val thumbnailFileName: String? = null
+    var thumbnailFileName: String? = null
 
     @Column(nullable = false, length = 40)
-    val encodingFilePath: String? = null
+    var encodingFilePath: String? = null
 
     @Column(nullable = false, length = 20)
-    val encodingFileName: String? = null
+    var encodingFileName: String? = null
 }
