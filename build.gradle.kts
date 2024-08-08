@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
 
 plugins {
     id("org.springframework.boot") version "3.2.5"
@@ -64,4 +65,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.jar {
+    enabled = false
 }

@@ -11,11 +11,9 @@ class Schedule(
     val jobLauncher: JobLauncher,
     val job : Job
 ){
-/*    @Scheduled(cron = "0/10 * * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     fun scheduleTaskUsingCronExpression(){
-
         val jobParameter = JobParametersBuilder().toJobParameters();
         jobLauncher.run(job, jobParameter)
-
-    }*/
+    }
 }
